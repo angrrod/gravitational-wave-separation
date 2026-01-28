@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gravitational-wave-separation"
+version = "0.1.0"
+
+[tool.setuptools]
+py-modules = ["denoise_to_saparate_data", "utils"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["trainer*", "model*", "utils*", "data_loader*", "logger*","config*"]

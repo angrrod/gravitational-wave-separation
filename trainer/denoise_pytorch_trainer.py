@@ -14,8 +14,8 @@ import torch
 import os
 import matplotlib.pyplot as plt
 from torch.nn.parallel import data_parallel
-from load_data_zwg import get_train_batch_iter
-from load_data_zwg import get_train_batch_iter_shuffle_epoch
+from data_loader.load_data_zwg import get_train_batch_iter
+from data_loader.load_data_zwg import get_train_batch_iter_shuffle_epoch
 
 class MyModel(nn.Module):
     def __init__(self):

@@ -5,16 +5,16 @@ import torch.optim as optim
 import numpy as np
 import gc
 import os
-import denoise_pytorch_trainer
+import trainer.denoise_pytorch_trainer
 from config.option1 import parse
 import argparse
-from load_data_saparate import get_train_batch_for_denoise_task
-from load_data_saparate import get_val_batch_for_denoise_task
-from load_data_zwg import get_train_batch_iter
-from load_data_saparate_fudu import get_train_batch_iter_saparate
+from data_loader.load_data_saparate import get_train_batch_for_denoise_task
+from data_loader.load_data_saparate import get_val_batch_for_denoise_task
+from data_loader.load_data_zwg import get_train_batch_iter
+from data_loader.load_data_saparate_fudu import get_train_batch_iter_saparate
 from matplotlib import pyplot as plt
 import matplotlib
-matplotlib.use('TkAgg')
+# matplotlib.use('TkAgg')
 class data_sample():
     def __init__(self, noiseE1, noiseE2, noiseE3, mass1_list, mass2_list, spin1z_list, spin2z_list, right_ascension_list,
                  declination_list, signal_E1_list, signal_E2_list, signal_E3_list, snr_E1_list, snr_E2_list, snr_E3_list):
@@ -262,7 +262,7 @@ def get_saparate_data_val1():
         if m % 100 == 0:
             plt.savefig(os.path.join(output_folder + 'combine_signal', "combine_signal{}.png".format(m + 1)))
         # 显示图表
-        plt.show()
+        # plt.show()
         plt.close()
 
         m = m + 1

@@ -10,13 +10,13 @@ import torch
 import os
 import matplotlib.pyplot as plt
 from torch.nn.parallel import data_parallel
-from load_data_saparate import get_train_batch_for_end2end
-from load_data_saparate import get_val_batch_for_end2end
+from data_loader.load_data_saparate import get_train_batch_for_end2end
+from data_loader.load_data_saparate import get_val_batch_for_end2end
 # from denoise_to_saparate_data import get_saparate_data_train
 # from  denoise_to_saparate_data import get_saparate_data_val
 from model.model_rnn import Dual_RNN_model
-import denoise_pytorch_trainer
-from model.model import Conv_TasNet
+import trainer.denoise_pytorch_trainer
+# from model import Conv_TasNet
 from config import option
 import argparse
 import torch
@@ -24,31 +24,40 @@ from torch import nn
 from config.option import parse
 import csv
 # 加载第一个模型
-model_denoise = denoise_pytorch_trainer.MyModel()
-# model_path = 'E://Dual-Path-RNN-Pytorch//checkpoint_mse//MyModel//best.pt'
-model_path = './checkpoint_mse/MyModel/best.pt'
-dict1 = torch.load(model_path, map_location='cuda:0')
-model_denoise.load_state_dict(dict1["model_state_dict"])
-model_denoise = model_denoise.cuda()
-# model_denoise = model_denoise
-# 加载第二个模型
-# yaml_path = './config/Conv_Tasnet/train.yml'
-# opt = parse(yaml_path)
-# Conv_Tasnet = Conv_TasNet(**opt['Conv_Tasnet'])
-# model_path = './checkpoint/Conv_Tasnet/best.pt'
-# dict2 = torch.load(model_path, map_location='cpu')
-# Conv_Tasnet.load_state_dict(dict2["model_state_dict"])
-# Conv_Tasnet = Conv_Tasnet.cuda()
+# model_denoise = trainer.denoise_pytorch_trainer.MyModel()
+# # model_path = 'E://Dual-Path-RNN-Pytorch//checkpoint_mse//MyModel//best.pt'
+# # model_path_1 = f"{path}/External/gravitational-wave-separation/checkpoint_end2end/end_to_end_model/last.pt"
+# # model_path_2 = f"{path}/External/gravitational-wave-separation/checkpoint/Conv_Tasnet/last.pt"
+# # model_path_3 = f"{path}/External/gravitational-wave-separation/checkpoint/Dual_Path_RNN/last.pt"
+# # model_path_4 = f"{path}/External/end_to_end_model/best_end2end_plot_loss.pt"
+# # model_path_5 = f"{path}/External/end_to_end_model/last.pt"
 
-yaml_path1 = './config/Dual_RNN/train_rnn.yml'
-opt = parse(yaml_path1)
-Dual_Path_RNN= Dual_RNN_model(**opt['Dual_Path_RNN'])
-# model_path = 'E://Dual-Path-RNN-Pytorch//checkpoint//Dual_Path_RNN//best_rnn.pt'
-model_path = './checkpoint/Dual_Path_RNN/best_rnn.pt'
-dict3 = torch.load(model_path, map_location='cpu')
-Dual_Path_RNN.load_state_dict(dict3["model_state_dict"])
-Dual_Path_RNN = Dual_Path_RNN.cuda()
-# Dual_Path_RNN = Dual_Path_RNN
+# model_path = f"{path}/External/end_to_end_model/best_end2end.pt"
+# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# dict1 = torch.load(model_path, map_location=device)
+
+# # model_denoise.load_state_dict(dict1["model_state_dict"])
+# # model_denoise = model_denoise.cuda()
+# # model_denoise = model_denoise
+# # 加载第二个模型
+# # yaml_path = './config/Conv_Tasnet/train.yml'
+# # opt = parse(yaml_path)
+# # Conv_Tasnet = Conv_TasNet(**opt['Conv_Tasnet'])
+# # model_path = './checkpoint/Conv_Tasnet/best.pt'
+# # dict2 = torch.load(model_path, map_location='cpu')
+# # Conv_Tasnet.load_state_dict(dict2["model_state_dict"])
+# # Conv_Tasnet = Conv_Tasnet.cuda()
+
+# yaml_path1 = f'{path}/External/gravitational-wave-separation/config/Dual_RNN/train_rnn.yml'
+# opt = parse(yaml_path1)
+# Dual_Path_RNN= Dual_RNN_model(**opt['Dual_Path_RNN'])
+# # model_path = 'E://Dual-Path-RNN-Pytorch//checkpoint//Dual_Path_RNN//best_rnn.pt'
+# model_path = f'{path}/External/gravitational-wave-separation/checkpoint/Dual_Path_RNN/last.pt'
+# dict3 = torch.load(model_path, map_location='cpu')
+# Dual_Path_RNN.load_state_dict(dict3["model_state_dict"])
+# # Dual_Path_RNN = Dual_Path_RNN.cuda()
+# return model_denoise, Dual_Path_RNN
+    
 # 将两个模型组合成一个模型
 class CombinedModel(nn.Module):
     def __init__(self, model_denoise, Dual_Path_RNN):
